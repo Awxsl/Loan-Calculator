@@ -24,25 +24,32 @@ function onRun() {
 }
 
 function onSubmit(e) {
+    onRun();
     if(amount.value === '' || interest.value === '' || years.value === '') {
-        onRun();
         const alert = document.createElement('div');
         alert.className = 'alert alert-danger';
         alert.textContent = 'Please fill all the fields!';
         document.querySelector('.card').insertBefore(alert, document.querySelector('.heading'));
         setTimeout(function() {
             alert.style.display = 'none';
-        }, 1000);
+        }, 3000);
     } else {
-        // Insert the logic here
-        monthlyPayment.value = `${amount.value/10}$`;
-        totalPayment.value = `${amount.value * 5}$`;
-        totalInterest.value = `${interest.value * 2}$`;
+        const image = document.createElement('div');
+        image.id = 'loading';
+        image.innerHTML = '<img src="img/loading.gif">';
+        document.querySelector('.card').appendChild(image);
+        setTimeout(function() {
+            image.style.display = 'none';
 
-        resultHeading.style.display = 'block';
-        monthlyPayment.parentElement.parentElement.style.display = 'block';
-        totalPayment.parentElement.parentElement.style.display = 'block';
-        totalInterest.parentElement.parentElement.style.display = 'block';
+            monthlyPayment.value = `${amount.value/10}$`;
+            totalPayment.value = `${amount.value * 5}$`;
+            totalInterest.value = `${interest.value * 2}$`;
+    
+            resultHeading.style.display = 'block';
+            monthlyPayment.parentElement.parentElement.style.display = 'block';
+            totalPayment.parentElement.parentElement.style.display = 'block';
+            totalInterest.parentElement.parentElement.style.display = 'block';
+        }, 1000);
     }
     e.preventDefault();
 }
